@@ -45,7 +45,7 @@ export const addAccountValidation = inputRule()(
           .matches(/^[0-9]{16}$/)
           .required(),
         status: yup.number().integer().positive().min(0).max(1).required(),
-        user_id: yup.string().required(),
+        userId: yup.string().required(),
       }),
     }),
   {

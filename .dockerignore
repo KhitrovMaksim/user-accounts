@@ -1,0 +1,20 @@
+# Versioning and metadata
+.git
+.gitignore
+.dockerignore
+
+# Build dependencies
+dist.do
+node_modules
+dist
+.husky
+docker-compose*
+Dockerfile
+
+# Environment (contains sensitive data)
+*.env
+
+# Misc
+.eslintrc*
+.prettierrc*
+README.md

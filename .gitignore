@@ -4,6 +4,7 @@ node_modules
 *.pem
 *.done
 .DS_Store
+.env
 
 # Editor directories and files
 .vscode/*
@@ -16,3 +17,4 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
+/docker-data/

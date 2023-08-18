@@ -1,17 +1,40 @@
 # User accounts
 
+## Description
+User account management system with registration, authentication and account list management.
+**Stack**: GraphQL, Express, Apollo Server, Prisma, PostgreSQL, JWT, Docker
+
+## Quick start
+Commands:
 ```shell
-npm i -D webpack webpack-cli webpack-node-externals
-npm i -D babel-loader
-npm i -D dotenv nodemon
-npm i -E @graphql-tools/merge @graphql-tools/schema @graphql-tools/load-files
-npm i graphql-middleware graphql-shield
-npm i @prisma/client
-npm i prisma --save-dev
-npx prisma init
-
+git clone https://github.com/KhitrovMaksim/user-accounts.git
+cd user-accounts
+docker compose -f docker-compose.dev.yml up -d
 ```
+## Requirements
+- Docker v24.0.0 or later
+- Node.js v18.0.0 or later
+- Dev environment variables:
+```dotenv
+# .env
+PORT=3000
+JWT_SECRET=super_secret
+DATABASE_URL=postgresql://postgres:postgres@localhost:5433/user-accounts
+```
+## Stay in touch
+
+- Author - Maksim Khitrov
+- LinkedIn - [https://www.linkedin.com/in/maksim-khitrov/](https://www.linkedin.com/in/maksim-khitrov/)
 
 
-Notes:
-https://github.com/apollographql-education/side-quest-auth/blob/main/server/resolvers.js
+## ToDo
+- Docker compose production
+- Env variables for production
+- Logger
+- Errors (Exception handling, status code)
+- Roles
+- Try Catch
+- TypeScript
+- Clients (React, React Native)
+- Ci/Cd
+- Docs

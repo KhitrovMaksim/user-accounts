@@ -5,7 +5,6 @@ import {
   loginValidation,
   registrationValidation,
   updateAccountValidation,
-  // eslint-disable-next-line import/extensions
 } from './rules.js';
 
 const permissions = shield(

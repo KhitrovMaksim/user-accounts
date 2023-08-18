@@ -1,39 +1,42 @@
 import { GraphQLCurrency } from 'graphql-scalars';
-import db from '../_db.js';
+import { accountService } from './account.service.js';
+import { userService } from '../users/user.service.js';
+import { NewAccountDto } from './dtos/new-account.dto.js';
+import { UpdateAccountStatusDto } from './dtos/update-account-status.dto.js';
+import { AccountsPaginationDto } from './dtos/accounts-pagination.dto.js';
 
 export default {
   Currency: GraphQLCurrency,
   Query: {
-    accounts() {
-      return db.accounts;
+    async accounts() {
+      return accountService.getAllAccounts();
     },
-    account(_, args) {
-      return db.accounts.find((account) => account.id === args.id);
+    async account(_, { id }) {
+      return accountService.getAccountById(id);
+    },
+    async accountsPagination(_, { pagination }) {
+      const accountPaginationDto = new AccountsPaginationDto(pagination);
+      return accountService.getAccountsByLimitAndPage(accountPaginationDto);
     },
   },
   Account: {
-    user(account) {
-      return db.users.find((user) => user.id === account.user_id);
+    user({ userId }) {
+      return userService.getUserById(userId);
     },
   },
   Mutation: {
-    addAccount(_, { account }) {
-      const newAccount = { ...account, id: Math.floor(Math.random() * 10000).toString() };
-      db.accounts.push(newAccount);
+    async addAccount(_, { account }) {
+      const newAccountDto = new NewAccountDto(account);
+      const newAccount = await accountService.createAccount(newAccountDto);
       return newAccount;
     },
-    updateAccount(_, { edits, id }) {
-      db.accounts = db.accounts.map((account) => {
-        if (account.id === id) {
-          return { ...account, ...edits };
-        }
-        return account;
-      });
-      return db.accounts.find((account) => account.id === id);
+    async updateAccount(_, { edits, id }) {
+      const { status } = edits;
+      const updateAccountStatusDto = new UpdateAccountStatusDto({ id, status });
+      return accountService.editAccountStatus(updateAccountStatusDto);
     },
-    deleteAccount(_, args) {
-      db.accounts = db.accounts.filter((account) => account.id !== args.id);
-      return db.accounts;
+    async deleteAccount(_, { id }) {
+      return accountService.deleteAccount(id);
     },
   },
 };

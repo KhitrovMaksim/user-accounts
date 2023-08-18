@@ -7,12 +7,14 @@ const users = [
   {
     id: '2',
     email: 'max2@max.max',
-    password: 'admin',
+    password:
+      '$argon2id$v=19$m=65536,t=3,p=4$2f/lROtoBWuRfYJL7xF2dg$GLxkpqHNpp5b5C0eDvRFdIoWoQ9EFy6+w7L2A0/3K/8',
   },
   {
     id: '3',
     email: 'max3@max.max',
-    password: 'admin',
+    password:
+      '$argon2id$v=19$m=65536,t=3,p=4$2f/lROtoBWuRfYJL7xF2dg$GLxkpqHNpp5b5C0eDvRFdIoWoQ9EFy6+w7L2A0/3K/8',
   },
 ];
 
@@ -22,7 +24,7 @@ const accounts = [
     currency: 'EUR',
     balance: 102.5,
     status: 1,
-    number: 1111222233334444,
+    number: '1111222233334444',
     user_id: '1',
   },
   {
@@ -30,7 +32,7 @@ const accounts = [
     currency: 'USD',
     balance: 63.5,
     status: 1,
-    number: 1111222233334444,
+    number: '1111222233334444',
     user_id: '1',
   },
   {
@@ -38,7 +40,7 @@ const accounts = [
     currency: 'USD',
     balance: 63.5,
     status: 1,
-    number: 1111222233334444,
+    number: '1111222233334444',
     user_id: '2',
   },
 ];

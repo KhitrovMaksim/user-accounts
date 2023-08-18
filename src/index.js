@@ -5,15 +5,21 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-// eslint-disable-next-line import/extensions
+import 'dotenv/config';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { applyMiddleware } from 'graphql-middleware';
 import { typeDefs, resolvers } from './schema.js';
+import { TokenParserUtil } from './utils/token-parser.util.js';
+import permissions from './access/permissions.js';
 
+const port = process.env.PORT;
 const app = express();
 const httpServer = http.createServer(app);
 
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schemaWithPermissions = applyMiddleware(schema, permissions);
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: schemaWithPermissions,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
@@ -24,12 +30,9 @@ app.use(
   cors(),
   bodyParser.json(),
   expressMiddleware(server, {
-    context: async ({ req }) => ({ token: req.headers.token }),
+    context: async ({ req }) => ({ user: TokenParserUtil.getUser(req.headers.authorization) }),
   }),
 );
 
 // eslint-disable-next-line no-promise-executor-return
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-
-// eslint-disable-next-line no-console
-console.log('🚀 Server ready at http://localhost:4000/');
+await new Promise((resolve) => httpServer.listen({ port }, resolve));

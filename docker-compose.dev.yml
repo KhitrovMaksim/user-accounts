@@ -13,12 +13,16 @@ services:
       - '5433:5432'
     volumes:
       - ./docker-data/user-accounts:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
-    command: npm start
+    command: sh -c "npx prisma db push && npm start"
     environment:
       - PORT=3000
       - JWT_SECRET=super_secret
@@ -26,4 +30,5 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy

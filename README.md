@@ -28,11 +28,11 @@ DATABASE_URL=postgresql://postgres:postgres@localhost:5433/user-accounts
 
 
 ## ToDo
-- Docker compose production
+- Docker compose for production
 - Env variables for production
 - Logger
-- Errors (Exception handling, status code)
-- Roles
+- Errors handling (Exception handling, status code)
+- Roles (for routs)
 - Try Catch
 - TypeScript
 - Clients (React, React Native)
